@@ -33,6 +33,9 @@ android {
 }
 
 dependencies {
+
+    implementation(project(":domain"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -42,4 +45,11 @@ dependencies {
 
     //koin
     implementation(libs.koin.core)
+
+
+    //FireBase
+    implementation(platform(libs.firebase.bom))
+
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
 }

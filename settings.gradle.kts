@@ -23,6 +23,7 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "my note"
+
 include(":app")
 include(":data")
 include(":domain")

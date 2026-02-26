@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="dev.geekpastor.mynote" />
+                  <option name="mobileSdkAppId" value="1:925947769171:android:31797f15e6ea7d7fea31a6" />
+                  <option name="projectId" value="realestateapp-7539d" />
+                  <option name="projectNumber" value="925947769171" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
