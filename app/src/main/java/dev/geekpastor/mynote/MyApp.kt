@@ -2,6 +2,7 @@ package dev.geekpastor.mynote
 
 import android.app.Application
 import dev.geekpastor.mynote.data.di.dataModule
+import dev.geekpastor.mynote.di.appModule
 import dev.geekpastor.mynote.domain.di.domainModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
