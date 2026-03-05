@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    kotlin("plugin.serialization")
 }
 
 android {
@@ -67,4 +68,12 @@ dependencies {
 
     // splash screen
     implementation(libs.androidx.core.splashscreen)
+
+    //navigation 3
+    implementation(libs.navigation3.runtime)
+    implementation(libs.navigation3.ui)
+
+    //serializer
+    implementation(libs.kotlinx.serialization.json)
+
 }

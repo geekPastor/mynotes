@@ -13,6 +13,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import dev.geekpastor.mynote.ui.navigation.MyNoteNavHost
 import dev.geekpastor.mynote.ui.theme.MyNoteTheme
 import org.koin.androidx.compose.koinViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -32,12 +33,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             MyNoteTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                MyNoteNavHost()
             }
         }
     }
