@@ -37,20 +37,22 @@ fun LoginScreen(
             painter = painterResource(R.drawable.login_image),
             contentDescription = "Login Image",
             contentScale = ContentScale.Crop,
-            modifier = Modifier.height(300.dp)
+            modifier = Modifier
+                .height(300.dp)
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
 
         Text(
             text = "Notez tout ce qui vous vient à l'esprit et que vous souhaitez accomplir, aujourd'hui ou à l'avenir.",
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier
+                .padding(top = 16.dp)
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
-
         ButtonGoogle(
+            modifier = Modifier
+                .padding(top = 16.dp),
             text = {
                 Text(
                     text = "Se conéctate con Google"
