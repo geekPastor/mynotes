@@ -43,16 +43,17 @@ fun LoginScreen(
 
 
         Text(
-            text = "Notez tout ce qui vous vient à l'esprit et que vous souhaitez accomplir, aujourd'hui ou à l'avenir.",
+            text = "Notez tout ce qui vous vient à l'esprit" +
+                    " et que vous souhaitez accomplir, aujourd'hui ou à l'avenir.",
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier
-                .padding(top = 16.dp)
+                .padding(top = 20.dp)
         )
 
         ButtonGoogle(
             modifier = Modifier
-                .padding(top = 16.dp),
+                .padding(top = 20.dp),
             text = {
                 Text(
                     text = "Se conéctate con Google"

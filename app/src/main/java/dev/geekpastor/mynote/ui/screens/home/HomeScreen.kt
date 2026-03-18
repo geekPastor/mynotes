@@ -2,18 +2,31 @@ package dev.geekpastor.mynote.ui.screens.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
+import dev.geekpastor.mynote.R
+import dev.geekpastor.mynote.domain.model.Note
+import dev.geekpastor.mynote.ui.screens.home.components.NoteItem
 import dev.geekpastor.mynote.ui.screens.home.components.TopAppBar
 import dev.geekpastor.mynote.utils.paddingAndConsumeWindowInsets
 import kotlinx.serialization.Serializable
@@ -58,14 +71,60 @@ fun HomeScreen(){
     }
 }
 
+
 @Composable
-fun HomeContent(){
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text(
-            text = "Home Screen"
+fun HomeContent() {
+
+    val notes = List(20) {
+        Note(
+            title = "Note $it",
+            content = "Description ${"lorem ipsum ".repeat((1..5).random())}",
+            id = "",
+            createdAt = 0L,
+            updatedAt = 0L
         )
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+
+        // 🔍 Search bar
+        OutlinedTextField(
+            value = "",
+            onValueChange = {},
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp),
+            trailingIcon = {
+                Icon(
+                    painter = painterResource(R.drawable.ic_search),
+                    contentDescription = "Search Icon"
+                )
+            },
+            placeholder = {
+                Text("Rechercher une note")
+            }
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        // 🔥 Pinterest Grid
+        LazyVerticalStaggeredGrid(
+            columns = StaggeredGridCells.Fixed(2),
+            verticalItemSpacing = 8.dp,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.fillMaxSize()
+        ) {
+            items(notes.size) { index ->
+                val note = notes[index]
+
+                NoteItem(
+                    note = note,
+                    onClick = {}
+                )
+            }
+        }
     }
 }
