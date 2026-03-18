@@ -77,7 +77,7 @@ fun HomeContent() {
 
     val notes = List(20) {
         Note(
-            title = "Note $it",
+            title = "Note ${it+1}",
             content = "Description ${"lorem ipsum ".repeat((1..5).random())}",
             id = "",
             createdAt = 0L,
@@ -110,7 +110,7 @@ fun HomeContent() {
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        // 🔥 Pinterest Grid
+        // 🔥 Note Grid
         LazyVerticalStaggeredGrid(
             columns = StaggeredGridCells.Fixed(2),
             verticalItemSpacing = 8.dp,
