@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
@@ -26,53 +27,33 @@ import dev.geekpastor.mynote.ui.screens.login.LoginScreen
 @Composable
 fun MyNoteNavHost(
     modifier: Modifier = Modifier
-){
-    val backStack  = rememberNavBackStack(LoginRoute)
+) {
+    val backStack = rememberNavBackStack(LoginRoute)
+    val currentRoute = backStack.lastOrNull()
 
     Scaffold(
         modifier = modifier,
+
         bottomBar = {
-
-            if (backStack.lastOrNull() !is LoginRoute){
-
-                NavigationBar {
-                    NavigationBarItem(
-                        selected = backStack.lastOrNull() is HomeRoute,
-                        onClick = backStack::navigateToHome,
-                        icon = {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_home),
-                                contentDescription = "Home"
-                            )
-                        },
-                        label = { Text("Mes notes") }
-                    )
-
-                    /*NavigationBarItem(
-                        selected = backStack.lastOrNull() is SearchRoute,
-                        onClick = backStack::navigateToSearch,
-                        icon = {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_search),
-                                contentDescription = "Search"
-                            )
-                        },
-                        label = { Text("Search") }
-                    )*/
-
-                }
-
+            if (currentRoute !is LoginRoute) {
+                BottomNavigationBar(
+                    currentRoute = currentRoute,
+                    onHomeClick = backStack::navigateToHome
+                )
             }
         }
     ) { innerPadding ->
+
         NavDisplay(
             backStack = backStack,
-            onBack = {backStack.removeLastOrNull()},
+            onBack = { backStack.removeLastOrNull() },
             modifier = Modifier
                 .padding(innerPadding)
                 .consumeWindowInsets(innerPadding),
+
             entryProvider = entryProvider {
-                entry<HomeRoute>{
+
+                entry<HomeRoute> {
                     HomeScreenRoute(
                         onNoteClick = { note ->
                             backStack.navigateToNoteDetail(note.id)
@@ -83,13 +64,11 @@ fun MyNoteNavHost(
                 entry<NoteDetailRoute> { route ->
                     NoteDetailScreen(
                         noteId = route.noteId,
-                        onBack = {
-                            backStack.removeLastOrNull()
-                        }
+                        onBack = { backStack.removeLastOrNull() }
                     )
                 }
 
-                entry<LoginRoute>{
+                entry<LoginRoute> {
                     LoginScreen(
                         onLoginSuccess = {
                             backStack.navigateToHome()
@@ -97,6 +76,26 @@ fun MyNoteNavHost(
                     )
                 }
             }
+        )
+    }
+}
+
+@Composable
+private fun BottomNavigationBar(
+    currentRoute: NavKey?,
+    onHomeClick: () -> Unit
+) {
+    NavigationBar {
+        NavigationBarItem(
+            selected = currentRoute is HomeRoute,
+            onClick = onHomeClick,
+            icon = {
+                Icon(
+                    painter = painterResource(R.drawable.ic_home),
+                    contentDescription = "Home"
+                )
+            },
+            label = { Text("Mes notes") }
         )
     }
 }
