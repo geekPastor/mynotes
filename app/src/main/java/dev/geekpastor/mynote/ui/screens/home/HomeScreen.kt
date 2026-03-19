@@ -26,8 +26,8 @@ import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import dev.geekpastor.mynote.R
 import dev.geekpastor.mynote.domain.model.Note
+import dev.geekpastor.mynote.ui.screens.home.components.MyTopAppBar
 import dev.geekpastor.mynote.ui.screens.home.components.NoteItem
-import dev.geekpastor.mynote.ui.screens.home.components.TopAppBar
 import dev.geekpastor.mynote.utils.paddingAndConsumeWindowInsets
 import kotlinx.serialization.Serializable
 
@@ -54,33 +54,6 @@ fun HomeScreen(
     onNoteClick: (Note) -> Unit
 ){
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-    Scaffold(
-        modifier = Modifier.nestedScroll(
-            scrollBehavior.nestedScrollConnection
-        ),
-        topBar = {
-            TopAppBar(scrollBehavior = scrollBehavior)
-        },
-        bottomBar = {}
-    ) {paddingValues ->
-        PullToRefreshBox(
-            isRefreshing = false,
-            onRefresh = {},
-            modifier = Modifier
-                .fillMaxSize()
-                .paddingAndConsumeWindowInsets(paddingValues)
-        ) {
-            HomeContent(onNoteClick = onNoteClick)
-        }
-    }
-}
-
-
-@Composable
-fun HomeContent(
-    onNoteClick: (Note) -> Unit
-) {
-
     val notes = List(20) {
         Note(
             title = "Note ${it+1}",
@@ -91,48 +64,91 @@ fun HomeContent(
         )
     }
 
+    Scaffold(
+        modifier = Modifier.nestedScroll(
+            scrollBehavior.nestedScrollConnection
+        ),
+        topBar = {
+            MyTopAppBar(scrollBehavior = scrollBehavior)
+        },
+        bottomBar = {}
+    ) {paddingValues ->
+        PullToRefreshBox(
+            isRefreshing = false,
+            onRefresh = {},
+            modifier = Modifier
+                .fillMaxSize()
+                .paddingAndConsumeWindowInsets(paddingValues)
+        ) {
+            HomeContent(
+                onNoteClick = onNoteClick,
+                notes = notes
+            )
+        }
+    }
+}
+
+
+@Composable
+fun HomeContent(
+    notes: List<Note>,
+    onNoteClick: (Note) -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
 
-        // 🔍 Search bar
-        OutlinedTextField(
-            value = "",
-            onValueChange = {},
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp),
-            trailingIcon = {
-                Icon(
-                    painter = painterResource(R.drawable.ic_search),
-                    contentDescription = "Search Icon"
-                )
-            },
-            placeholder = {
-                Text("Rechercher une note")
-            }
-        )
+        SearchBar()
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        // 🔥 Note Grid
-        LazyVerticalStaggeredGrid(
-            columns = StaggeredGridCells.Fixed(2),
-            verticalItemSpacing = 8.dp,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.fillMaxSize()
-        ) {
-            items(notes.size) { index ->
-                val note = notes[index]
+        NotesGrid(
+            notes = notes,
+            onNoteClick = onNoteClick
+        )
+    }
+}
 
-                NoteItem(
-                    note = note,
-                    onClick = {
-                        onNoteClick(note)
-                    }
-                )
-            }
+
+//Search Bar
+@Composable
+private fun SearchBar() {
+    OutlinedTextField(
+        value = "",
+        onValueChange = {},
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        trailingIcon = {
+            Icon(
+                painter = painterResource(R.drawable.ic_search),
+                contentDescription = "Search"
+            )
+        },
+        placeholder = { Text("Search notes...") }
+    )
+}
+
+
+//Note Grid list
+@Composable
+private fun NotesGrid(
+    notes: List<Note>,
+    onNoteClick: (Note) -> Unit
+) {
+    LazyVerticalStaggeredGrid(
+        columns = StaggeredGridCells.Fixed(2),
+        verticalItemSpacing = 8.dp,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(notes.size) { index ->
+            val note = notes[index]
+
+            NoteItem(
+                note = note,
+                onClick = { onNoteClick(note) }
+            )
         }
     }
 }
