@@ -18,13 +18,31 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation3.runtime.NavBackStack
+import androidx.navigation3.runtime.NavKey
 import dev.geekpastor.mynote.R
+import dev.geekpastor.mynote.ui.screens.home.HomeRoute
 import dev.geekpastor.mynote.ui.screens.login.components.ButtonGoogle
 import dev.geekpastor.mynote.ui.theme.MyNoteTheme
+import kotlinx.serialization.Serializable
+
+
+@Serializable
+data object LoginRoute: NavKey
+
+
+fun NavBackStack<NavKey>.navigateToLogin(){
+    if (lastOrNull() !is LoginRoute){
+        clear()
+        add(LoginRoute)
+    }
+}
+
 
 @Composable
 fun LoginScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onLoginSuccess: () -> Unit = {}
 ){
     Column(
         modifier = modifier
@@ -59,7 +77,9 @@ fun LoginScreen(
                     text = "Se conéctate con Google"
                 )
             },
-            onClick = {}
+            onClick = {
+                onLoginSuccess()
+            }
         )
     }
 }

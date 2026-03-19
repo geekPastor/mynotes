@@ -17,40 +17,47 @@ import dev.geekpastor.mynote.R
 import dev.geekpastor.mynote.ui.screens.home.HomeRoute
 import dev.geekpastor.mynote.ui.screens.home.HomeScreenRoute
 import dev.geekpastor.mynote.ui.screens.home.navigateToHome
+import dev.geekpastor.mynote.ui.screens.login.LoginRoute
+import dev.geekpastor.mynote.ui.screens.login.LoginScreen
 
 @Composable
 fun MyNoteNavHost(
     modifier: Modifier = Modifier
 ){
-    val backStack  = rememberNavBackStack(HomeRoute)
+    val backStack  = rememberNavBackStack(LoginRoute)
 
     Scaffold(
         modifier = modifier,
         bottomBar = {
-            NavigationBar {
-                NavigationBarItem(
-                    selected = backStack.lastOrNull() is HomeRoute,
-                    onClick = backStack::navigateToHome,
-                    icon = {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_home),
-                            contentDescription = "Home"
-                        )
-                    },
-                    label = { Text("Mes notes") }
-                )
 
-                /*NavigationBarItem(
-                    selected = backStack.lastOrNull() is SearchRoute,
-                    onClick = backStack::navigateToSearch,
-                    icon = {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_search),
-                            contentDescription = "Search"
-                        )
-                    },
-                    label = { Text("Search") }
-                )*/
+            if (backStack.lastOrNull() !is LoginRoute){
+
+                NavigationBar {
+                    NavigationBarItem(
+                        selected = backStack.lastOrNull() is HomeRoute,
+                        onClick = backStack::navigateToHome,
+                        icon = {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_home),
+                                contentDescription = "Home"
+                            )
+                        },
+                        label = { Text("Mes notes") }
+                    )
+
+                    /*NavigationBarItem(
+                        selected = backStack.lastOrNull() is SearchRoute,
+                        onClick = backStack::navigateToSearch,
+                        icon = {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_search),
+                                contentDescription = "Search"
+                            )
+                        },
+                        label = { Text("Search") }
+                    )*/
+
+                }
 
             }
         }
@@ -64,6 +71,14 @@ fun MyNoteNavHost(
             entryProvider = entryProvider {
                 entry<HomeRoute>{
                     HomeScreenRoute()
+                }
+
+                entry<LoginRoute>{
+                    LoginScreen(
+                        onLoginSuccess = {
+                            backStack.navigateToHome()
+                        }
+                    )
                 }
             }
         )
