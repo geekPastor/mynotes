@@ -2,9 +2,7 @@ package dev.geekpastor.mynote.ui.screens.details
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -16,7 +14,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
-import dev.geekpastor.mynote.ui.screens.home.components.TopAppBar
+import dev.geekpastor.mynote.ui.screens.home.components.MyTopAppBar
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -29,6 +27,12 @@ fun NavBackStack<NavKey>.navigateToNoteDetail(noteId: String) {
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
+/**
+ * Displays note details.
+ *
+ * @param noteId ID of the note to display
+ * @param onBack Triggered when user navigates back
+ */
 @Composable
 fun NoteDetailScreen(
     noteId: String,
@@ -36,37 +40,29 @@ fun NoteDetailScreen(
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
-    BackHandler {
-        onBack()
-    }
+    BackHandler { onBack() }
 
     Scaffold(
-        modifier = Modifier.nestedScroll(
-            scrollBehavior.nestedScrollConnection
-        ),
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+
         topBar = {
-            TopAppBar(
+            MyTopAppBar(
                 scrollBehavior = scrollBehavior,
-                title = "Titre de la note",
+                title = "Note Title",
                 onBackClick = onBack
             )
-        },
-        bottomBar = {}
-    ) {paddingValues ->
+        }
+    ) { paddingValues ->
 
         Column(
             modifier = Modifier
                 .padding(paddingValues)
-                .fillMaxSize()
                 .padding(16.dp)
+                .fillMaxSize()
         ) {
-
-            Spacer(modifier = Modifier.height(16.dp))
 
             Text(text = "Note ID: $noteId")
 
-            // plus tard : récupérer la note depuis ViewModel
         }
-
     }
 }
