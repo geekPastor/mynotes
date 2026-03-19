@@ -42,13 +42,17 @@ fun NavBackStack<NavKey>.navigateToHome(){
 }
 
 @Composable
-fun HomeScreenRoute(){
-    HomeScreen()
+fun HomeScreenRoute(
+    onNoteClick: (Note) -> Unit
+){
+    HomeScreen(onNoteClick)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(){
+fun HomeScreen(
+    onNoteClick: (Note) -> Unit
+){
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold(
         modifier = Modifier.nestedScroll(
@@ -66,14 +70,16 @@ fun HomeScreen(){
                 .fillMaxSize()
                 .paddingAndConsumeWindowInsets(paddingValues)
         ) {
-            HomeContent()
+            HomeContent(onNoteClick = onNoteClick)
         }
     }
 }
 
 
 @Composable
-fun HomeContent() {
+fun HomeContent(
+    onNoteClick: (Note) -> Unit
+) {
 
     val notes = List(20) {
         Note(
@@ -122,7 +128,9 @@ fun HomeContent() {
 
                 NoteItem(
                     note = note,
-                    onClick = {}
+                    onClick = {
+                        onNoteClick(note)
+                    }
                 )
             }
         }

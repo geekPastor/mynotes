@@ -14,6 +14,9 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import dev.geekpastor.mynote.R
+import dev.geekpastor.mynote.ui.screens.details.NoteDetailRoute
+import dev.geekpastor.mynote.ui.screens.details.NoteDetailScreen
+import dev.geekpastor.mynote.ui.screens.details.navigateToNoteDetail
 import dev.geekpastor.mynote.ui.screens.home.HomeRoute
 import dev.geekpastor.mynote.ui.screens.home.HomeScreenRoute
 import dev.geekpastor.mynote.ui.screens.home.navigateToHome
@@ -70,7 +73,20 @@ fun MyNoteNavHost(
                 .consumeWindowInsets(innerPadding),
             entryProvider = entryProvider {
                 entry<HomeRoute>{
-                    HomeScreenRoute()
+                    HomeScreenRoute(
+                        onNoteClick = { note ->
+                            backStack.navigateToNoteDetail(note.id)
+                        }
+                    )
+                }
+
+                entry<NoteDetailRoute> { route ->
+                    NoteDetailScreen(
+                        noteId = route.noteId,
+                        onBack = {
+                            backStack.removeLastOrNull()
+                        }
+                    )
                 }
 
                 entry<LoginRoute>{
