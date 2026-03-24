@@ -11,12 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import dev.geekpastor.mynote.R
 
@@ -26,7 +23,8 @@ fun CreateNoteTopBar(
     scrollBehavior: TopAppBarScrollBehavior,
     title: String,
     onTitleChange: (String) -> Unit,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    isNoteDetailsScreen : Boolean = false
 ) {
     LargeTopAppBar(
         title = {
@@ -57,6 +55,38 @@ fun CreateNoteTopBar(
                     contentDescription = "Back"
                 )
             }
+        },
+        actions = {
+            IconButton(onClick = {}) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_pin),
+                    contentDescription = "Back"
+                )
+            }
+
+            IconButton(onClick = {}) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_notification),
+                    contentDescription = "Back"
+                )
+            }
+
+            IconButton(onClick = {}) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_archive),
+                    contentDescription = "Back"
+                )
+            }
+
+            if (isNoteDetailsScreen){
+                IconButton(onClick = {}) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_delete),
+                        contentDescription = "Back"
+                    )
+                }
+            }
+
         },
 
         scrollBehavior = scrollBehavior,
