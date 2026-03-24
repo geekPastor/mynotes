@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -43,15 +44,20 @@ fun NavBackStack<NavKey>.navigateToHome(){
 
 @Composable
 fun HomeScreenRoute(
-    onNoteClick: (Note) -> Unit
+    onNoteClick: (Note) -> Unit,
+    navigateToCreateNote: () -> Unit
 ){
-    HomeScreen(onNoteClick)
+    HomeScreen(
+        onNoteClicked = onNoteClick,
+        navigateToCreateNote = navigateToCreateNote
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    onNoteClick: (Note) -> Unit
+    onNoteClicked: (Note) -> Unit,
+    navigateToCreateNote: ()-> Unit
 ){
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val notes = List(20) {
@@ -71,7 +77,17 @@ fun HomeScreen(
         topBar = {
             MyTopAppBar(scrollBehavior = scrollBehavior)
         },
-        bottomBar = {}
+        bottomBar = {},
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = navigateToCreateNote
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_create),
+                    contentDescription = "Create note Icon"
+                )
+            }
+        }
     ) {paddingValues ->
         PullToRefreshBox(
             isRefreshing = false,
@@ -81,7 +97,7 @@ fun HomeScreen(
                 .paddingAndConsumeWindowInsets(paddingValues)
         ) {
             HomeContent(
-                onNoteClick = onNoteClick,
+                onNoteClick = onNoteClicked,
                 notes = notes
             )
         }

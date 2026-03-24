@@ -15,6 +15,10 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import dev.geekpastor.mynote.R
+import dev.geekpastor.mynote.ui.screens.create.CreateNote
+import dev.geekpastor.mynote.ui.screens.create.CreateNoteRoute
+import dev.geekpastor.mynote.ui.screens.create.CreateNoteScreen
+import dev.geekpastor.mynote.ui.screens.create.navigateToCreateNote
 import dev.geekpastor.mynote.ui.screens.details.NoteDetailRoute
 import dev.geekpastor.mynote.ui.screens.details.NoteDetailScreen
 import dev.geekpastor.mynote.ui.screens.details.navigateToNoteDetail
@@ -53,10 +57,32 @@ fun MyNoteNavHost(
 
             entryProvider = entryProvider {
 
+
+
+                entry<LoginRoute> {
+                    LoginScreen(
+                        onLoginSuccess = {
+                            backStack.navigateToHome()
+                        }
+                    )
+                }
+                
+                
                 entry<HomeRoute> {
                     HomeScreenRoute(
                         onNoteClick = { note ->
                             backStack.navigateToNoteDetail(note.id)
+                        },
+                        navigateToCreateNote = {
+                            backStack.navigateToCreateNote()
+                        }
+                    )
+                }
+
+                entry<CreateNoteRoute>{
+                    CreateNoteScreen(
+                        onBack = {
+                            backStack.removeLastOrNull()
                         }
                     )
                 }
@@ -65,14 +91,6 @@ fun MyNoteNavHost(
                     NoteDetailScreen(
                         noteId = route.noteId,
                         onBack = { backStack.removeLastOrNull() }
-                    )
-                }
-
-                entry<LoginRoute> {
-                    LoginScreen(
-                        onLoginSuccess = {
-                            backStack.navigateToHome()
-                        }
                     )
                 }
             }
@@ -96,6 +114,18 @@ private fun BottomNavigationBar(
                 )
             },
             label = { Text("Mes notes") }
+        )
+
+        NavigationBarItem(
+            selected = currentRoute is HomeRoute,
+            onClick = onHomeClick,
+            icon = {
+                Icon(
+                    painter = painterResource(R.drawable.ic_favorite_border),
+                    contentDescription = "Favorite notes icon"
+                )
+            },
+            label = { Text("Notes Favorites") }
         )
     }
 }
