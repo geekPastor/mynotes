@@ -42,4 +42,8 @@ dependencies {
 
     //koin
     implementation(libs.koin.core)
+
+    //FireBase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
 }
