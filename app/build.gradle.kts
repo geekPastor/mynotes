@@ -76,4 +76,8 @@ dependencies {
     //serializer
     implementation(libs.kotlinx.serialization.json)
 
+    //FireBase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+
 }
