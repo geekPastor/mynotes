@@ -15,10 +15,8 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import dev.geekpastor.mynote.R
 import dev.geekpastor.mynote.ui.screens.create.CreateNoteRoute
-import dev.geekpastor.mynote.ui.screens.create.CreateNoteScreen
 import dev.geekpastor.mynote.ui.screens.create.navigateToCreateNote
 import dev.geekpastor.mynote.ui.screens.details.NoteDetailRoute
 import dev.geekpastor.mynote.ui.screens.details.NoteDetailScreen
@@ -90,7 +88,7 @@ fun MyNoteNavHost(
                 }
 
                 entry<CreateNoteRoute>{
-                    CreateNoteScreen(
+                    CreateNoteRoute(
                         onBack = {
                             backStack.removeLastOrNull()
                         }

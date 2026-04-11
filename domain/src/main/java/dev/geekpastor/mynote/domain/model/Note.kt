@@ -4,8 +4,8 @@ data class Note(
     val id: String = "",
     val userId: String = "",
 
-    val title: String,
-    val content: String,
+    val title: String = "",
+    val content: String="",
 
     val isFavorite : Boolean = false,
     val isArchived: Boolean = false,
