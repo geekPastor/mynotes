@@ -8,6 +8,10 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.navigation3.runtime.NavKey
@@ -16,6 +20,7 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.google.firebase.auth.FirebaseAuth
 import dev.geekpastor.mynote.R
+import dev.geekpastor.mynote.domain.model.Note
 import dev.geekpastor.mynote.ui.screens.create.CreateNoteRoute
 import dev.geekpastor.mynote.ui.screens.create.navigateToCreateNote
 import dev.geekpastor.mynote.ui.screens.details.NoteDetailRoute
@@ -38,6 +43,10 @@ fun MyNoteNavHost(
         rememberNavBackStack(HomeRoute)
     } else{
         rememberNavBackStack(LoginRoute)
+    }
+
+    var noteData by remember {
+        mutableStateOf(Note())
     }
 
     val currentRoute = backStack.lastOrNull()
@@ -79,6 +88,7 @@ fun MyNoteNavHost(
                 entry<HomeRoute> {
                     HomeScreenRoute(
                         onNoteClick = { note ->
+                            noteData = note
                             backStack.navigateToNoteDetail(note.id)
                         },
                         navigateToCreateNote = {
