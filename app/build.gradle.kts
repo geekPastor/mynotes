@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     kotlin("plugin.serialization")
+    alias(libs.plugins.com.google.gms.google.services)
 }
 
 android {
@@ -79,5 +80,6 @@ dependencies {
     //FireBase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
+    implementation(libs.google.playservices.auth)
 
 }

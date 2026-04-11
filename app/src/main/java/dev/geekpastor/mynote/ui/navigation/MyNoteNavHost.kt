@@ -15,7 +15,6 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import dev.geekpastor.mynote.R
-import dev.geekpastor.mynote.ui.screens.create.CreateNote
 import dev.geekpastor.mynote.ui.screens.create.CreateNoteRoute
 import dev.geekpastor.mynote.ui.screens.create.CreateNoteScreen
 import dev.geekpastor.mynote.ui.screens.create.navigateToCreateNote
@@ -26,11 +25,12 @@ import dev.geekpastor.mynote.ui.screens.home.HomeRoute
 import dev.geekpastor.mynote.ui.screens.home.HomeScreenRoute
 import dev.geekpastor.mynote.ui.screens.home.navigateToHome
 import dev.geekpastor.mynote.ui.screens.login.LoginRoute
-import dev.geekpastor.mynote.ui.screens.login.LoginScreen
+import dev.geekpastor.mynote.ui.screens.login.LoginScreenRoute
 
 @Composable
 fun MyNoteNavHost(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    webClientToken: String = ""
 ) {
     val backStack = rememberNavBackStack(LoginRoute)
     val currentRoute = backStack.lastOrNull()
@@ -60,10 +60,11 @@ fun MyNoteNavHost(
 
 
                 entry<LoginRoute> {
-                    LoginScreen(
-                        onLoginSuccess = {
+                    LoginScreenRoute(
+                        navigateHome = {
                             backStack.navigateToHome()
-                        }
+                        },
+                        webClientToken = webClientToken
                     )
                 }
                 

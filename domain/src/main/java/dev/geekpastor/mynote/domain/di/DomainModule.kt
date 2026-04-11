@@ -16,6 +16,7 @@ val domainModule = module {
     factory { GetNotesUseCase(get()) }
     factory { GetNoteDetailsUseCase(get()) }
     factory { DeleteNoteUseCase(get()) }
+
     factory { GetUserByUid(get ()) }
     factory { GetCurrentUserUseCase(get()) }
     factory { GetCurrentUserStreamUseCase(get()) }

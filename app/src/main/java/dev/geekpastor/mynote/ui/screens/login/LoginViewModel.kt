@@ -3,13 +3,13 @@ package dev.geekpastor.mynote.ui.screens.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.AuthCredential
-import dev.geekpastor.mynote.data.repository.UserRepositoryImpl
+import dev.geekpastor.mynote.domain.repository.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private  val userRepository: UserRepositoryImpl
+    private  val userRepository: UserRepository
 ): ViewModel(){
     private  val _uiState: MutableStateFlow<LoginUiState> = MutableStateFlow(LoginUiState.Idle)
 

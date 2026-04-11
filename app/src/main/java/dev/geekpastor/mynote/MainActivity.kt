@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             MyNoteTheme {
-                MyNoteNavHost()
+                MyNoteNavHost(webClientToken = getString(R.string.web_client_token))
             }
         }
     }

@@ -12,7 +12,20 @@
           "package_name": "com.example.realestateapp"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "925947769171-o57f8rpjubvn2kk587326m291nboufmu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.realestateapp",
+            "certificate_hash": "28f3570034f0ff6f75a57c113ce3e68fc6298871"
+          }
+        },
+        {
+          "client_id": "925947769171-2ig59etrv63rscfb0iad5bq999nithio.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCeNXyVun6YiCRKq8xK1Qwv9ebeLJIqKn4"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925947769171-2ig59etrv63rscfb0iad5bq999nithio.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     },
@@ -31,7 +49,20 @@
           "package_name": "dev.geekpastor.mynote"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "925947769171-o8e4vmnvnekgrvg0jlgflg45hlhkf1uc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.geekpastor.mynote",
+            "certificate_hash": "28f3570034f0ff6f75a57c113ce3e68fc6298871"
+          }
+        },
+        {
+          "client_id": "925947769171-2ig59etrv63rscfb0iad5bq999nithio.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCeNXyVun6YiCRKq8xK1Qwv9ebeLJIqKn4"
@@ -39,7 +70,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925947769171-2ig59etrv63rscfb0iad5bq999nithio.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
