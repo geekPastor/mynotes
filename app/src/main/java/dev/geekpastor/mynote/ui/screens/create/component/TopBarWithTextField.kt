@@ -32,15 +32,15 @@ fun CreateNoteTopBar(
                 value = title,
                 onValueChange = onTitleChange,
                 textStyle = MaterialTheme.typography.titleLarge.copy(
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
                 ),
                 modifier = Modifier.fillMaxWidth(),
                 decorationBox = { innerTextField ->
                     if (title.isEmpty()) {
                         Text(
                             "Titre",
-                            style = MaterialTheme.typography.titleLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            style = MaterialTheme.typography.titleLarge
                         )
                     }
                     innerTextField()
@@ -59,7 +59,7 @@ fun CreateNoteTopBar(
         actions = {
             IconButton(onClick = {}) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_pin),
+                    painter = painterResource(R.drawable.ic_favorite_border),
                     contentDescription = "Back"
                 )
             }

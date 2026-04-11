@@ -99,7 +99,9 @@ fun NoteDetailScreen(
             BasicTextField(
                 value = content,
                 onValueChange = { content = it },
-                textStyle = MaterialTheme.typography.bodyLarge,
+                textStyle = MaterialTheme.typography.bodyLarge.copy(
+                    color = MaterialTheme.colorScheme.onSurface
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),

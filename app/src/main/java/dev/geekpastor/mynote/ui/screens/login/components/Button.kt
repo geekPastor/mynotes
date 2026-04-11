@@ -23,7 +23,10 @@ import dev.geekpastor.mynote.R
 
 
 @Composable
-fun ButtonGoogle(modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun ButtonGoogle(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
     ExtendedFloatingActionButton(
         onClick = onClick,
         containerColor = Color.White,

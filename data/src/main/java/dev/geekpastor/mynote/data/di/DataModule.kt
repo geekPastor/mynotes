@@ -22,7 +22,7 @@ val dataModule = module {
     single { FirebaseAuth.getInstance() }
 
     single<NoteRepository> {
-        NoteRepositoryImpl(get())
+        NoteRepositoryImpl(get(), get ())
     }
 
     single<UserRepository> {

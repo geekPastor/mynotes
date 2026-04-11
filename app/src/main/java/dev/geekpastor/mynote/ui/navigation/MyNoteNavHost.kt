@@ -14,6 +14,8 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import dev.geekpastor.mynote.R
 import dev.geekpastor.mynote.ui.screens.create.CreateNoteRoute
 import dev.geekpastor.mynote.ui.screens.create.CreateNoteScreen
@@ -32,7 +34,14 @@ fun MyNoteNavHost(
     modifier: Modifier = Modifier,
     webClientToken: String = ""
 ) {
-    val backStack = rememberNavBackStack(LoginRoute)
+    val user = FirebaseAuth.getInstance().currentUser
+
+    val backStack = if (user != null){
+        rememberNavBackStack(HomeRoute)
+    } else{
+        rememberNavBackStack(LoginRoute)
+    }
+
     val currentRoute = backStack.lastOrNull()
 
     Scaffold(

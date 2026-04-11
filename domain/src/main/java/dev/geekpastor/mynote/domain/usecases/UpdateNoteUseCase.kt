@@ -1,9 +1,10 @@
 package dev.geekpastor.mynote.domain.usecases
 
+import dev.geekpastor.mynote.domain.model.Note
 import dev.geekpastor.mynote.domain.repository.NoteRepository
 
-class GetNotesUseCase(
+class UpdateNoteUseCase(
     private val repository: NoteRepository
 ) {
-    operator fun invoke() = repository.getAllNotes()
+    suspend operator fun invoke(note: Note) = repository.updateNote(note)
 }
