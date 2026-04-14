@@ -98,7 +98,7 @@ fun CreateNoteScreen(
                 onBackClick = {
                     saveNote()
                     onBack()
-                }
+                },
             )
         }
     ) { paddingValues ->

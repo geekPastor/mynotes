@@ -1,5 +1,6 @@
 package dev.geekpastor.mynote.ui.screens.create.component
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -12,6 +13,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
@@ -24,7 +26,10 @@ fun CreateNoteTopBar(
     title: String,
     onTitleChange: (String) -> Unit,
     onBackClick: () -> Unit,
-    isNoteDetailsScreen : Boolean = false
+    isNoteDetailsScreen : Boolean = false,
+    isFavorite: Boolean = false,
+    onToggleFavorite: () -> Unit = {},
+    onDeleteClick: () -> Unit = {}
 ) {
     LargeTopAppBar(
         title = {
@@ -57,10 +62,21 @@ fun CreateNoteTopBar(
             }
         },
         actions = {
-            IconButton(onClick = {}) {
+            IconButton(onClick = {
+                onToggleFavorite()
+            }) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_favorite_border),
-                    contentDescription = "Back"
+                    painter = painterResource(
+                        if (isFavorite)
+                            R.drawable.ic_favorite_filled
+                        else
+                            R.drawable.ic_favorite_border
+                    ),
+                    contentDescription = "Favorite Toggle",
+                    tint = if (isFavorite)
+                        Color(0xFFE91E63) // rose style WhatsApp/Keep
+                    else
+                        MaterialTheme.colorScheme.onSurface
                 )
             }
 
@@ -71,7 +87,9 @@ fun CreateNoteTopBar(
                 )
             }
 
-            IconButton(onClick = {}) {
+            IconButton(onClick = {
+
+            }) {
                 Icon(
                     painter = painterResource(R.drawable.ic_archive),
                     contentDescription = "Back"
@@ -79,14 +97,15 @@ fun CreateNoteTopBar(
             }
 
             if (isNoteDetailsScreen){
-                IconButton(onClick = {}) {
+                IconButton(onClick = {
+                    onDeleteClick()
+                }) {
                     Icon(
                         painter = painterResource(R.drawable.ic_delete),
-                        contentDescription = "Back"
+                        contentDescription = "Delete Toggle"
                     )
                 }
             }
-
         },
 
         scrollBehavior = scrollBehavior,

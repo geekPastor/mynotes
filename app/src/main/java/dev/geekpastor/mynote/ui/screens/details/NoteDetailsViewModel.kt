@@ -84,4 +84,39 @@ class NoteDetailViewModel(
             saveNote()
         }
     }
+
+    //Toggle Favorite
+    fun toggleFavorite() {
+        val state = _uiState.value
+        if (state is NoteDetailUiState.Success) {
+            val updatedNote = state.note.copy(
+                isFavorite = !state.note.isFavorite
+            )
+
+            _uiState.value = state.copy(note = updatedNote)
+            autoSave()
+        }
+    }
+
+    // Delete Note
+    fun deleteNote(onSuccess: () -> Unit) {
+        val state = _uiState.value
+        if (state !is NoteDetailUiState.Success) return
+
+        viewModelScope.launch {
+            try {
+                repository.deleteNote(state.note.id)
+                onSuccess()
+            } catch (e: Exception) {
+                _uiState.value = NoteDetailUiState.Error(e)
+            }
+        }
+    }
+
+    fun saveAndExit(onDone: () -> Unit) {
+        viewModelScope.launch {
+            saveNote()
+            onDone()
+        }
+    }
 }
