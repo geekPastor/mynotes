@@ -15,6 +15,7 @@ import dev.geekpastor.mynote.domain.usecases.GetUserByUid
 import dev.geekpastor.mynote.domain.usecases.SignInWithCredentialUseCase
 import dev.geekpastor.mynote.ui.NotesViewModel
 import dev.geekpastor.mynote.ui.screens.create.CreateNoteViewModel
+import dev.geekpastor.mynote.ui.screens.details.NoteDetailViewModel
 import dev.geekpastor.mynote.ui.screens.home.HomeViewModel
 import dev.geekpastor.mynote.ui.screens.login.LoginViewModel
 import org.koin.core.module.dsl.viewModel
@@ -26,4 +27,5 @@ val appModule = module {
     viewModel { NotesViewModel(get(), get(), get()) }
     viewModel { HomeViewModel(get()) }
     viewModel { CreateNoteViewModel(get ()) }
+    viewModel { NoteDetailViewModel(get()) }
 }

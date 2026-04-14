@@ -48,8 +48,13 @@ class NoteRepositoryImpl(
 
     // GET ONE NOTE
     override suspend fun getNoteById(noteId: String): Note? {
-        val doc = notesRef().document(noteId).get().await()
-        return doc.toObject(Note::class.java)?.copy(id = doc.id)
+        val doc = notesRef()
+            .document(noteId)
+            .get().await()
+
+        return doc
+            .toObject(Note::class.java)
+            ?.copy(id = doc.id)
     }
 
     // CREATE NOTE

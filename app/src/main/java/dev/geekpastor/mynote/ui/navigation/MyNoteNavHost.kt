@@ -89,7 +89,7 @@ fun MyNoteNavHost(
                     HomeScreenRoute(
                         onNoteClick = { note ->
                             noteData = note
-                            backStack.navigateToNoteDetail(note.id)
+                            backStack.navigateToNoteDetail(note)
                         },
                         navigateToCreateNote = {
                             backStack.navigateToCreateNote()
