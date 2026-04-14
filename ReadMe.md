@@ -1,246 +1,340 @@
 # 📝 Note App
 
-> **Warning**: This project is intentionally over-structured for learning purposes. It’s a simple Notes app… built like it’s preparing for scale.
+> ⚠️ **Disclaimer**
+> This project is intentionally over-structured for learning purposes.
+> It is a simple Notes application designed as an architecture playground rather than a production-ready product.
 
-🚧 **Status:** In Active Development
-Currently implementing UI screens, navigation, and polishing documentation.
-
----
-
-## About
-
-This project could honestly be called *“Clean Architecture Playground.”*
-
-It’s a simple Notes application — create, edit, view, delete. Nothing revolutionary.
-
-But instead of building it the “quick CRUD tutorial way”, I deliberately structured it using:
-
-* Multi-module architecture
-* Strict separation of concerns
-* Dependency injection
-* Interface-driven design
-* Real-time backend integration
-
-Why?
-
-Because small apps are the safest place to experiment with big architecture decisions.
-
-You probably wouldn’t need this level of structure for a basic notes app. But the goal here isn’t speed — it’s understanding trade-offs, boundaries, and scalability.
-
-Read the code thoughtfully.
-Steal what’s useful.
-Ignore what’s excessive.
-
-Don’t say: *“I did it because it was done there.”*
-Architecture is contextual.
+🚧 **Status:** Active Development
+Currently improving UI polish, real-time synchronization, and architecture experiments.
 
 ---
 
-# Project Structure
+# 📖 Overview
 
-This repository demonstrates a clean multi-module setup:
+This project is a **Clean Architecture playground built around a simple Notes app**.
+
+At its core, the application allows:
+
+* Creating notes
+* Editing notes
+* Viewing notes
+* Deleting notes
+* Marking favorites
+* Archiving notes
+* Real-time synchronization via Firebase
+
+However, the real objective is not CRUD functionality.
+
+It is to explore how far architectural structure can be pushed in a small project.
+
+---
+
+## 🧠 Why this project exists
+
+Most tutorials typically follow this pattern:
 
 ```text
-:app
-:data
-:domain
+UI → Firebase → Done
 ```
 
-### :domain
+This project deliberately avoids that shortcut.
 
-Pure business logic layer.
+Instead, it explores:
 
-Contains:
+* Clear separation of concerns
+* Dependency inversion
+* Modular architecture boundaries
+* Interface-driven design
+* Real-time backend integration
+* Scalability trade-offs
 
-* `Note` domain model
+Small apps are the safest environment to experiment with architecture decisions that would be risky in production systems.
+
+---
+
+# 🏗️ Architecture
+
+This project follows **Clean Architecture + MVVM + Multi-module structure**.
+
+---
+
+## 📦 Modules Overview
+
+```text
+:app       → Presentation Layer (UI, ViewModels, Navigation)
+:data      → Data Layer (Firebase, repositories, DTOs)
+:domain    → Business Logic Layer (models, contracts, use cases)
+```
+
+---
+
+## 🧠 :domain (Core Layer)
+
+The **pure business logic layer**.
+
+### Contains:
+
+* Domain models (`Note`, `User`)
 * Repository interfaces
-* Use cases
+* (Optional) Use cases
 
-Rules:
+### Rules:
 
-* No Android framework dependencies
-* No Firebase knowledge
-* Fully unit-testable
-* 100% independent
+* ❌ No Android dependencies
+* ❌ No Firebase knowledge
+* ✅ Fully testable
+* ✅ Independent of infrastructure
 
-This is the core of the application.
+👉 This is the **core of the system**
 
 ---
 
-### :data
+## 🔌 :data (Infrastructure Layer)
 
-Infrastructure layer.
+Handles external systems and persistence.
 
-Contains:
+### Contains:
 
-* Repository implementations
-* Firestore integration
+* Firebase Firestore implementation
 * DTOs and mappers
+* Repository implementations
 
-This module implements the contracts defined in `domain`.
+### Responsibilities:
 
-It knows about Firebase.
-`domain` does not.
+* Implements domain contracts
+* Handles data persistence and networking
+* Maps DTO ↔ Domain models
+
+👉 This layer is **replaceable (Firebase could be swapped)**
 
 ---
 
-### :app
+## 🎨 :app (Presentation Layer)
 
-Presentation layer.
+Handles everything related to UI and user interaction.
 
-Contains:
+### Contains:
 
 * Jetpack Compose UI
-* ViewModels (MVVM)
-* Navigation
-* Koin initialization
+* MVVM ViewModels
+* Navigation (Navigation 3)
+* Dependency Injection (Koin)
 * Application entry point
 
-This module wires everything together.
+### Responsibilities:
+
+* State management
+* UI rendering
+* User interactions
+
+👉 This is the **composition layer that wires everything together**
 
 ---
 
-# Data Flow
+# 🔄 Data Flow
 
-The application follows a strict unidirectional flow:
+The project follows a strict unidirectional flow:
 
 ```text
 UI
  ↓
 ViewModel
  ↓
-UseCase
+UseCase (optional)
  ↓
 Repository (interface)
  ↓
 RepositoryImpl
  ↓
-Cloud Firestore
+Firebase Firestore
 ```
 
-No shortcuts.
-No direct Firebase calls from UI.
-No business logic in ViewModels.
+### Rules:
+
+* ❌ No Firebase calls in UI
+* ❌ No business logic in ViewModels
+* ❌ No infrastructure logic in domain
 
 ---
 
-# Dependency Injection
+# 🔥 Backend
 
-Dependency injection is handled using Koin.
+The app uses:
 
-Why Koin?
+* Firebase Authentication
+* Cloud Firestore (Realtime updates)
+
+---
+
+## 📂 Data structure
+
+```text
+users/{userId}/notes/{noteId}
+```
+
+---
+
+## 🧩 Note capabilities
+
+Each note supports:
+
+* Favorite state
+* Archive state
+* Real-time updates
+* Timestamp tracking (created / updated)
+
+---
+
+# 💉 Dependency Injection
+
+Dependency injection is handled using **Koin 4.x**
+
+### Why Koin?
 
 * Kotlin-first DSL
 * Lightweight
-* No code generation
-* Perfect fit for modular projects
+* No annotation processing
+* Ideal for modular projects
 
-Each module exposes its own DI module:
+---
+
+## 📦 DI structure
+
+Each module provides its own DI definitions:
 
 * `domainModule`
 * `dataModule`
 * `appModule`
 
-Everything is composed at application startup.
+They are composed at application startup.
 
 ---
 
-# Backend
+# 📦 Gradle Architecture Insight
 
-The app uses:
-
-* Firebase
-* Cloud Firestore
-
-Notes are stored in a Firestore collection and observed in real-time.
-
-The goal here wasn’t just CRUD — it was integrating a cloud backend cleanly inside a modular architecture.
+This project enforces architectural boundaries at build level.
 
 ---
 
-# Learning Goals
+## :domain
 
-This project exists to:
-
-* Practice modular architecture in Android
-* Understand dependency boundaries
-* Improve architectural decision-making
-* Learn where abstraction helps — and where it doesn’t
-* Experience the trade-offs of “clean” design
+* No Android plugin
+* Pure Kotlin module
+* No external dependencies on infrastructure
 
 ---
 
-# What You Can Learn
+## :data
 
-* Multi-module Gradle structure
-* Clean Architecture layering
-* Dependency Injection setup
-* Repository pattern implementation
-* Real-time Firestore integration
-* Compose + StateFlow state management
+* Depends only on `:domain`
+* Implements Firebase integration
 
 ---
 
-# What NOT to Learn
+## :app
 
-* Don’t over-engineer small production apps blindly
-* Don’t add abstraction without a reason
-* Don’t treat architectural purity as a goal
-* Don’t forget that maintainability beats cleverness
-
-This project is structured intentionally — not dogmatically.
+* Depends on `:domain` + `:data`
+* Entry point of the system
 
 ---
 
-# Tech Stack
+### 🚧 Why this matters
 
-### Language
+This structure prevents:
+
+* Circular dependencies
+* Firebase leakage into UI
+* Business logic inside wrong layers
+* Tight coupling between modules
+
+---
+
+# 📚 Tech Stack
+
+## Language
 
 * Kotlin 2.3.10
 
-### Architecture
+## UI
+
+* Jetpack Compose
+* Material 3
+
+## Architecture
 
 * Clean Architecture
 * MVVM
 * Multi-module Gradle setup
 
-### Dependency Injection
+## Dependency Injection
 
 * Koin 4.1.1
 
-### Backend
+## Backend
 
-* Firebase (BOM 34.9.0)
-* Cloud Firestore
+* Firebase Auth
+* Cloud Firestore (Realtime)
 
-### UI
+## Navigation
 
-* Jetpack Compose
-* Material 3
-
-### Testing
-
-* JUnit
-* Espresso
+* Navigation 3 (experimental)
 
 ---
 
-# Future Improvements
+# 🚀 Future Improvements
 
-* Authentication per user
-* Offline-first architecture (Room cache)
+* Offline-first support (Room caching layer)
 * Feature-based modularization
-* Improved error handling strategy
-* CI/CD integration
-* Advanced unit testing
+* Better error handling strategy (`Result` wrapper)
+* CI/CD pipeline (GitHub Actions)
+* Advanced testing strategy (unit + integration)
+* Performance optimizations for large datasets
 
 ---
 
-# Final Thoughts
+# 🤝 Contribution
 
-This isn’t just a Notes app.
+Contributions are welcome — especially if they improve architecture clarity or simplicity.
 
-It’s a sandbox for architectural experimentation.
+### How to contribute
 
-The goal wasn’t to build fast.
-The goal was to build intentionally.
+1. Fork the repository
+2. Create a feature branch:
+
+   ```bash
+   git checkout -b feature/my-feature
+   ```
+3. Commit changes:
+
+   ```bash
+   git commit -m "Add: my feature description"
+   ```
+4. Push branch:
+
+   ```bash
+   git push origin feature/my-feature
+   ```
+5. Open a Pull Request
+
+---
+
+### Contribution guidelines
+
+* Keep architecture consistent with existing structure
+* Avoid unnecessary abstraction
+* Prefer simplicity over over-engineering
+* Explain non-trivial decisions in PR description
+
+---
+
+# 🧠 Final Thought
+
+This project is not about building a Notes app.
+
+It is about understanding a deeper question:
+
+> “How far can we push structure before it becomes unnecessary complexity?”
+
+And more importantly:
+
+> Knowing when to stop.
